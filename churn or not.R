@@ -2,17 +2,53 @@
 
 #Reaading the required dataset
 rm(list=ls())
+
 train=read.csv(file = 'C:/Users/user/Desktop/Project/Churn or not/Train_data.csv',stringsAsFactors = FALSE)
 test=read.csv('C:/Users/user/Desktop/Project/Churn or not/Test_data.csv',stringsAsFactors = FALSE)
 View(train)
 dim(train)
+#[1] 3333   20
 dim(test)
+#[1] 1667   20
 sum(is.na(train))#there is no missing value
-
-#so there is class imbalance
+[1] 0
 prop.table(table(train$Churn))
+# False.     True. 
+#0.8550855 0.1449145  
+#so there is class imbalance
 colnames(train)
+#[1] "state"                         "account.length"                "area.code"                    
+#[4] "phone.number"                  "international.plan"            "voice.mail.plan"              
+#[7] "number.vmail.messages"         "total.day.minutes"             "total.day.calls"              
+#[10] "total.day.charge"              "total.eve.minutes"             "total.eve.calls"              
+#[13] "total.eve.charge"              "total.night.minutes"           "total.night.calls"            
+#[16] "total.night.charge"            "total.intl.minutes"            "total.intl.calls"             
+#[19] "total.intl.charge"             "number.customer.service.calls" "Churn" 
+
 str(train)
+# $ state                        : chr  "KS" "OH" "NJ" "OH" ...
+# $ account.length               : int  128 107 137 84 75 118 121 147 117 141 ...
+#$ area.code                    : int  415 415 415 408 415 510 510 415 408 415 ...
+#$ phone.number                 : chr  " 382-4657" " 371-7191" " 358-1921" " 375-9999" ...
+#$ international.plan           : chr  " no" " no" " no" " yes" ...
+#$ voice.mail.plan              : chr  " yes" " yes" " no" " no" ...
+#$ number.vmail.messages        : int  25 26 0 0 0 0 24 0 0 37 ...
+#$ total.day.minutes            : num  265 162 243 299 167 ...
+#$ total.day.calls              : int  110 123 114 71 113 98 88 79 97 84 ...
+#$ total.day.charge             : num  45.1 27.5 41.4 50.9 28.3 ...
+#$ total.eve.minutes            : num  197.4 195.5 121.2 61.9 148.3 ...
+#$ total.eve.calls              : int  99 103 110 88 122 101 108 94 80 111 ...
+#$ total.eve.charge             : num  16.78 16.62 10.3 5.26 12.61 ...
+#$ total.night.minutes          : num  245 254 163 197 187 ...
+#$ total.night.calls            : int  91 103 104 89 121 118 118 96 90 97 ...
+#$ total.night.charge           : num  11.01 11.45 7.32 8.86 8.41 ...
+#$ total.intl.minutes           : num  10 13.7 12.2 6.6 10.1 6.3 7.5 7.1 8.7 11.2 ...
+#$ total.intl.calls             : int  3 3 5 7 3 6 7 6 4 5 ...
+#$ total.intl.charge            : num  2.7 3.7 3.29 1.78 2.73 1.7 2.03 1.92 2.35 3.02 ...
+#$ number.customer.service.calls: int  1 1 0 2 3 0 3 0 1 0 ...
+#$ Churn                        : chr  " False." " False." " False." " False." ...
+
+
 
 #Dropping the phone number column
 train=train[,-4]
@@ -39,6 +75,7 @@ summary(train)
 library(ggplot2)
 ggplot(data = train,aes(x = Churn,fill = Churn))+
   geom_bar() +  labs(y='Churn Count', title = 'Customer Churn or Not')
+
 
 
 #plottingcchurn according to state
@@ -125,7 +162,7 @@ factor_var
 
 
 
-#######################chisquare test###########chisquare test############################
+##############################chisquare test################################chisquare test############################
 for (i in factor_var){
   print(i)
   print(chisq.test(table(train$Churn,train[,which(colnames(train)==i)])))
@@ -150,7 +187,7 @@ corelation
 train=train[,-which(colnames(train) %in% corelation)]
 test=test[,-which(colnames(test) %in% corelation)]
 
-###########################Normalizing variable##################Normalizing variable ####################
+###########################Normalizing variable##########################Normalizing variable ###########################
 library(lattice)
 numeric_var=colnames(train[sapply(train, iis.numeric)])
 numeric_var
