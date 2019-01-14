@@ -248,11 +248,21 @@ confusion_matrix
 
 cf(confusion_matrix)
 
-new_predict=ifelse(predict > 0.5,2,1)
-
-
+# [1] "accuracy is 0.656868626274745"
+# [1] "precission is 0.238738738738739"
+# [1] "sensitivity is 0.709821428571429"
+# [1] "specificity is 0.648648648648649"
+# [1] "false positive rate is 0.351351351351351"
+# [1] "false negative rate is 0.290178571428571"
+ 
 #now lets increse the prob
 new_predict=ifelse(predict > 0.6,2,1)
+# [1] "accuracy is 0.76124775044991"
+# [1] "precission is 0.30316742081448"
+# [1] "sensitivity is 0.598214285714286"
+# [1] "specificity is 0.786555786555787"
+# [1] "false positive rate is 0.213444213444213"
+# [1] "false negative rate is 0.401785714285714"
 
 library(ROCR)
 prediction=prediction(predict,test$Churn)
@@ -287,6 +297,12 @@ predict=predict(rf1,newdata=test)
 confusion_matrix=table(test$Churn,predict)
 cf(confusion_matrix)
 
+# [1] "accuracy is 0.922615476904619"
+# [1] "precission is 0.671480144404332"
+# [1] "sensitivity is 0.830357142857143"
+# [1] "specificity is 0.936936936936937"
+# [1] "false positive rate is 0.0630630630630631"
+# [1] "false negative rate is 0.169642857142857"
 
 ################knn##########################################knn############################ 
 knn_train=train[,-which(colnames(train)=='Churn')]
@@ -296,15 +312,32 @@ test_labels=test[,which(colnames(test)=='Churn')]
 library(class)
 knnmodel=knn(train=knn_train,test=knn_test,cl=train_labels,k=5)
 confusion_matrix=table(test$Churn,knnmodel)
+# [1] "accuracy is 0.593881223755249"
+# [1] "precission is 0.188445667125172"
+# [1] "sensitivity is 0.611607142857143"
+# [1] "specificity is 0.591129591129591"
+# [1] "false positive rate is 0.408870408870409"
+# [1] "false negative rate is 0.388392857142857
+
 cf(confusion_matrix)
 knnmodel2=knn(train=knn_train,test=knn_test,cl=train_labels,k=7)
 confusion_matrix=table(test$Churn,knnmodel2)
 cf(confusion_matrix)
-
+# [1] "accuracy is 0.598680263947211"
+# [1] "precission is 0.191400832177531"
+# [1] "sensitivity is 0.616071428571429"
+# [1] "specificity is 0.595980595980596"
+# [1] "false positive rate is 0.404019404019404"
+# [1] "false negative rate is 0.383928571428571"
 knnmodel3=knn(train=knn_train,test=knn_test,cl=train_labels,k=3)
 confusion_matrix=table(test$Churn,knnmodel)
 cf(confusion_matrix)
-
+# [1] "accuracy is 0.598680263947211"
+# [1] "precission is 0.191400832177531"
+# [1] "sensitivity is 0.616071428571429"
+# [1] "specificity is 0.595980595980596"
+# [1] "false positive rate is 0.404019404019404"
+# [1] "false negative rate is 0.383928571428571"
 
 #######################################naive bayes###################################
 library(e1071)
@@ -313,6 +346,18 @@ predict=predict(model1,newdata=test)
 confusion_matrix=table(test$Churn,predict)
 cf(confusion_matrix)
 save.image()
+# [1] "accuracy is 0.681463707258548"
+# [1] "precission is 0.2544"
+# [1] "sensitivity is 0.709821428571429"
+# [1] "specificity is 0.677061677061677"
+# [1] "false positive rate is 0.322938322938323"
+# [1] "false negative rate is 0.290178571428571"
+
+
+
+
+###SO FROM THE ABOVE MODEL RANDOM FOREST COMES OUT AS THE BEST MODEL FOR THE DATASET. BY USING RANDOM FOREST THE MODEL IS GIVING 
+92% ACCURACY ,83& SENSITIVITY,93% SPECIFICITY. SO WE FINIALISE RANDOM FOREST AS OUR FINAL MODEL.
 
 
 
